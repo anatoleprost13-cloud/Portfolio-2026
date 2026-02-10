@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatole Prost</title>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background:black;
+  font-family: 'HelveticaNeue', sans-serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:50px 0;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+img[src*="mouche.png"] {
+  position: fixed !important;
+  pointer-events:none;
+  z-index:3000;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+}
+
+#grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap:20px;
+  width:90%;
+  max-width:1200px;
+}
+
+@media (max-width: 768px) {
+  #grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap:15px;
+  }
+  .card {
+    max-height: 300px;
+  }
+  img[src*="mouche.png"] {
+    width: 120px !important;
+    height: 120px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #grid {
+    grid-template-columns: 1fr;
+    width:95%;
+  }
+}
+
+.card {
+  width:100%;
+  aspect-ratio:6.35/8.89;
+  border-radius:12px;
+  transform-style:preserve-3d;
+  transition: transform 0.6s ease, box-shadow 0.3s ease;
+  cursor:pointer;
+  position:relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.face {
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  backface-visibility:hidden;
+}
+
+.front {
+  background:black;
+  overflow:hidden;
+  color: white; /* texte blanc par défaut */
+}
+
+.front img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.back {
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:0.9rem;
+  padding:10px;
+  transform:rotateY(180deg);
+}
+
+/* =====================
+   CARTE INTRO
+===================== */
+.front.intro {
+  background:white;
+  color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  font-size:1.1rem;
+}
+
+.card.flip {
+  transform: rotateY(180deg);
+}
+
+.card.bazaar {
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* Masquer curseur sur tactile */
+@media (hover: none) and (pointer: coarse) {
+  img[src*="mouche.png"] {
+    display: none;
+  }
+}
+
+/* =====================
+   EMAIL EN HAUT GAUCHE
+===================== */
+#email {
+  position: fixed;
+  top: 20px;
+  left: 50%;           /* centre horizontalement */
+  transform: translateX(-50%);  /* ajuste le centrage exact */
+  color: white;
+  font-size: 0.9rem;
+  font-family: 'HelveticaNeue', sans-serif;
+  z-index: 4000;
+  user-select: none;
+  white-space: nowrap;
+}
+
+
+#email span {
+  display: inline-block;
+  transition: transform 0.8s cubic-bezier(.19,1,.22,1);
+  will-change: transform;
+}
+
+/* Force curseur système invisible partout */
+html, body, * {
+  cursor: none !important;
+}
+</style>
+</head>
+
+<body>
+
+<div id="email">anatoleprost13@gmail.com</div>
+<div id="grid"></div>
+
+<script src="script.js"></script>
+<script>
+// =====================
+// EMAIL PANIC
+// =====================
+const email = document.getElementById('email');
+const text = email.textContent;
+email.innerHTML = '';
+
+const letters = [];
+[...text].forEach(char => {
+  const span = document.createElement('span');
+  span.textContent = char;
+  email.appendChild(span);
+  letters.push(span);
+});
+
+function panicLetters() {
+  letters.forEach(l => {
+    const dx = (Math.random() - 0.5) * 120;
+    const dy = (Math.random() - 0.5) * 120;
+    const r  = (Math.random() - 0.5) * 60;
+    l.style.transform = `translate(${dx}px, ${dy}px) rotate(${r}deg)`;
+  });
+}
+
+function calmLetters() {
+  letters.forEach(l => {
+    l.style.transform = `translate(0,0) rotate(0deg)`;
+  });
+}
+
+email.addEventListener('mouseenter', panicLetters);
+email.addEventListener('mouseleave', calmLetters);
+
+// =====================
+// CURSEUR SYSTÈME BLOQUÉ
+// =====================
+document.addEventListener('mouseleave', () => {
+  document.documentElement.style.cursor = 'none';
+});
+document.addEventListener('mouseenter', () => {
+  document.documentElement.style.cursor = 'none';
+});
+</script>
+
+</body>
+</html>
+
+
+

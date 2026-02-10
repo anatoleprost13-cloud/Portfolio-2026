@@ -141,16 +141,29 @@ for(let i=0;i<TOTAL_CARDS;i++){
   c.style.transform=`translate(var(--dx),var(--dy)) rotate(${r0}deg)`;
 
   if(i===0){
+    // Carte intro : reste côté front
     c.innerHTML=`<div class="face front intro">
       Anatole Prost is a graphic design student particularly interested in rural culture and folklore.
     </div><div class="face back"></div>`;
     c.dataset.locked = "true";
     c.classList.remove('flip');
   } else {
+    // Toutes les autres cartes : initialement côté back
     c.innerHTML=`
       <div class="face front"><img src="${cardsData[i].img||''}"></div>
       <div class="face back">${cardsData[i].text||''}</div>
     `;
+    
+    // ======== MODIFICATION : cartes initialement côté back ========
+    c.classList.add('flip'); // ajoute la classe flip
+    const dx=parseFloat(c.style.getPropertyValue('--dx'))||0;
+    const dy=parseFloat(c.style.getPropertyValue('--dy'))||0;
+    const r=(Math.random()-0.5)*60; 
+    c.dataset.currentRot = r;
+    c.style.transform=`translate(${dx}px,${dy}px) rotateY(180deg) rotate(${r}deg)`;
+    c.classList.add('bazaar'); // applique le style bazaar correspondant au flip
+    // ===============================================================
+    
     c.addEventListener('click',()=>{
       if(c.dataset.locked === "true") return;
       if(moved){moved=false;return;}
@@ -183,6 +196,7 @@ for(let i=0;i<TOTAL_CARDS;i++){
 
   grid.appendChild(c);
 }
+
 
 // =====================
 // DRAG & DROP
