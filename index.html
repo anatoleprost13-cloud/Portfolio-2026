@@ -6,60 +6,84 @@
 <title>Anatole Prost</title>
 
 <style>
-/* =====================
-   RESET GLOBAL
-===================== */
 * { margin:0; padding:0; box-sizing:border-box; }
 
-/* =====================
-   BODY + SCROLL
-===================== */
-html, body {
-  width: 100vw;         
-  height: 100%;         
-  overflow-x: hidden;   
-  overflow-y: auto;     
-  touch-action: pan-y;  
+/* Masquer la scrollbar mais garder le scroll */
+
+/* Chrome, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* IE */
+body {
+  -ms-overflow-style: none;
+}
+
+
+body {
+  background:black;
   font-family: 'HelveticaNeue', sans-serif;
-  background: black;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:50px 0;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+html, body {
+  touch-action: manipulation;
 }
 
-/* =====================
-   GRID DES CARTES
-===================== */
+img[src*="mouche.png"] {
+  position: fixed !important;
+  pointer-events:none;
+  z-index:3000;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+}
+
 #grid {
-  display: grid;
+  display:grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 20px;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto; /* centre horizontalement */
+  gap:20px;
+  width:90%;
+  max-width:1200px;
 }
 
-/* GRID MOBILE */
 @media (max-width: 768px) {
   #grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    width: 95%;
-    margin: 0 auto;
+    gap:15px;
+  }
+  .card {
+    max-height: 300px;
+  }
+  img[src*="mouche.png"] {
+    width: 120px !important;
+    height: 120px !important;
   }
 }
 
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   #grid {
     grid-template-columns: 1fr;
-    width: 95%;
-    margin: 0 auto;
-  }
-}
+    width:95%;
+  } 
+}*/
 
-/* =====================
-   CARTES
-===================== */
+
+
 .card {
-  width: 100%;
-  max-width: 100%; /* empêche les débordements */
+  width:auto;
+  height: auto;
   aspect-ratio:6.35/8.89;
   border-radius:12px;
   transform-style:preserve-3d;
@@ -69,35 +93,75 @@ html, body {
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* FRONT/BACK et intro : tu gardes ton CSS actuel pour ça */
-
-/* =====================
-   CURSEUR ET MOUCHES
-===================== */
-img[src*="mouche.png"] {
-  position: fixed !important;
-  pointer-events: none;
-  z-index: 3000;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
+.face {
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  backface-visibility:hidden;
 }
 
-/* Sur mobile tactile, laisse visible */
+.front {
+  background:black;
+  overflow:hidden;
+  color: white; /* texte blanc par défaut */
+}
+
+.front img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.back {
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:0.9rem;
+  padding:10px;
+  transform:rotateY(180deg);
+}
+
+/* =====================
+   CARTE INTRO
+===================== */
+.front.intro {
+  background:white;
+  color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  font-size:1.1rem;
+}
+
+.card.flip {
+  transform: rotateY(180deg);
+}
+
+.card.bazaar {
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* Masquer curseur sur tactile */
 @media (hover: none) and (pointer: coarse) {
-  img[src*="mouche.png"] {
-    display: block;
+  .cursor-fly {
+    display: none;
   }
 }
 
+
 /* =====================
-   EMAIL EN HAUT
+   EMAIL EN HAUT GAUCHE
 ===================== */
 #email {
   position: fixed;
   top: 20px;
-  left: 50%;           
-  transform: translateX(-50%);  
+  left: 50%;           /* centre horizontalement */
+  transform: translateX(-50%);  /* ajuste le centrage exact */
   color: white;
   font-size: 0.9rem;
   font-family: 'HelveticaNeue', sans-serif;
@@ -105,6 +169,7 @@ img[src*="mouche.png"] {
   user-select: none;
   white-space: nowrap;
 }
+
 
 #email span {
   display: inline-block;
@@ -172,7 +237,6 @@ document.addEventListener('mouseenter', () => {
 
 </body>
 </html>
-
 
 
 
