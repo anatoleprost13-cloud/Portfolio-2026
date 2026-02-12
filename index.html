@@ -6,99 +6,60 @@
 <title>Anatole Prost</title>
 
 <style>
+/* =====================
+   RESET GLOBAL
+===================== */
 * { margin:0; padding:0; box-sizing:border-box; }
 
-/* Masquer la scrollbar mais garder le scroll */
-
-/* Chrome, Safari */
-::-webkit-scrollbar {
-  display: none;
-}
-
-/* Firefox */
-html {
-  scrollbar-width: none;
-}
-
-/* IE */
-body {
-  -ms-overflow-style: none;
-}
-
-
-body {
-  background:black;
-  font-family: 'HelveticaNeue', sans-serif;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:50px 0;
-
-  overflow-x: hidden; /* bloque scroll horizontal */
-  overflow-y: auto;   /* laisse défiler verticalement */
-  width: 100vw;       /* s’assure que body fait exactement la largeur de l’écran */
-}
+/* =====================
+   BODY + SCROLL
+===================== */
 html, body {
-  touch-action: manipulation;
-}
-body {
-  overflow-x: hidden; /* cache tout débordement horizontal */
-  width: 100vw;
-}
-
-
-img[src*="mouche.png"] {
-  position: fixed !important;
-  pointer-events:none;
-  z-index:3000;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
+  width: 100vw;         
+  height: 100%;         
+  overflow-x: hidden;   
+  overflow-y: auto;     
+  touch-action: pan-y;  
+  font-family: 'HelveticaNeue', sans-serif;
+  background: black;
 }
 
+/* =====================
+   GRID DES CARTES
+===================== */
 #grid {
-  display:grid;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap:20px;
-  width:90%;
-  max-width:1200px;
-    margin: 0 auto; 
+  gap: 20px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto; /* centre horizontalement */
 }
 
+/* GRID MOBILE */
 @media (max-width: 768px) {
   #grid {
     grid-template-columns: repeat(2, 1fr);
-    gap:15px;
-  }
-  .card {
-    max-height: 300px;
-  }
-  img[src*="mouche.png"] {
-    width: 120px !important;
-    height: 120px !important;
+    gap: 15px;
+    width: 95%;
+    margin: 0 auto;
   }
 }
 
-/* @media (max-width: 480px) {
+@media (max-width: 480px) {
   #grid {
     grid-template-columns: 1fr;
-    width:95%;
-  } 
-}*/
-
-/* Bloquer scroll horizontal et vertical sur mobile/tablette */
-@media (max-width: 1024px) {
-  html, body {
-    overflow: hidden; /* plus de scroll du tout */
-    touch-action: none; /* désactive le pinch/scroll */
+    width: 95%;
+    margin: 0 auto;
   }
 }
 
-
+/* =====================
+   CARTES
+===================== */
 .card {
-  width:auto;
-  height: auto;
+  width: 100%;
+  max-width: 100%; /* empêche les débordements */
   aspect-ratio:6.35/8.89;
   border-radius:12px;
   transform-style:preserve-3d;
@@ -108,75 +69,35 @@ img[src*="mouche.png"] {
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-.face {
-  position:absolute;
-  inset:0;
-  border-radius:12px;
-  backface-visibility:hidden;
-}
-
-.front {
-  background:black;
-  overflow:hidden;
-  color: white; /* texte blanc par défaut */
-}
-
-.front img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:12px;
-}
-
-.back {
-  background:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  font-size:0.9rem;
-  padding:10px;
-  transform:rotateY(180deg);
-}
+/* FRONT/BACK et intro : tu gardes ton CSS actuel pour ça */
 
 /* =====================
-   CARTE INTRO
+   CURSEUR ET MOUCHES
 ===================== */
-.front.intro {
-  background:white;
-  color:black;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px;
-  font-size:1.1rem;
+img[src*="mouche.png"] {
+  position: fixed !important;
+  pointer-events: none;
+  z-index: 3000;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
 }
 
-.card.flip {
-  transform: rotateY(180deg);
-}
-
-.card.bazaar {
-  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-}
-
-/* Masquer curseur sur tactile */
+/* Sur mobile tactile, laisse visible */
 @media (hover: none) and (pointer: coarse) {
-  .cursor-fly {
-    display: none;
+  img[src*="mouche.png"] {
+    display: block;
   }
 }
 
-
 /* =====================
-   EMAIL EN HAUT GAUCHE
+   EMAIL EN HAUT
 ===================== */
 #email {
   position: fixed;
   top: 20px;
-  left: 50%;           /* centre horizontalement */
-  transform: translateX(-50%);  /* ajuste le centrage exact */
+  left: 50%;           
+  transform: translateX(-50%);  
   color: white;
   font-size: 0.9rem;
   font-family: 'HelveticaNeue', sans-serif;
@@ -184,7 +105,6 @@ img[src*="mouche.png"] {
   user-select: none;
   white-space: nowrap;
 }
-
 
 #email span {
   display: inline-block;
@@ -248,19 +168,11 @@ document.addEventListener('mouseleave', () => {
 document.addEventListener('mouseenter', () => {
   document.documentElement.style.cursor = 'none';
 });
-
-@media (max-width: 1024px) {
-  html, body {
-    overflow-x: hidden;  /* interdit scroll horizontal */
-    overflow-y: auto;    /* autorise scroll vertical */
-    touch-action: pan-y; /* pinch/scroll vertical uniquement */
-  }
-}
-
 </script>
 
 </body>
 </html>
+
 
 
 
