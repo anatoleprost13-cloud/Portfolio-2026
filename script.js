@@ -34,14 +34,10 @@ if(window.matchMedia("(hover: none) and (pointer: coarse)").matches){
   cursor.style.display = 'none';
 }
 
-let mouseX = 0, mouseY = 0;
 let currentX = 0, currentY = 0;
 let angle = 0, targetAngle = 0;
 let lastX = 0, lastY = 0;
 
-// =====================
-// MOUVEMENT CURSEUR
-// =====================
 document.addEventListener('mousemove', e => {
   mouseX = e.clientX;
   mouseY = e.clientY;
@@ -72,36 +68,6 @@ function animateCursor() {
   requestAnimationFrame(animateCursor);
 }
 animateCursor();
-
-// =====================
-// MOBILE TOUCH (scroll + panic)
-// =====================
-let lastTouchY = 0;
-document.addEventListener('touchstart', e => {
-  const touch = e.touches[0];
-  lastTouchY = touch.clientY;
-  triggerPanicAt(touch.pageX, touch.pageY);
-});
-
-document.addEventListener('touchmove', e => {
-  const touch = e.touches[0];
-  const deltaY = touch.clientY - lastTouchY;
-
-  // Si le scroll vertical est important, ne pas bloquer le mouvement naturel
-  if(Math.abs(deltaY) > 5) return;
-
-  mouseX = touch.clientX;
-  mouseY = touch.clientY;
-
-  lastTouchY = touch.clientY;
-});
-
-// =====================
-// CSS pour autoriser scroll vertical sur mobile
-// =====================
-document.documentElement.style.touchAction = 'pan-y';
-document.body.style.touchAction = 'pan-y';
-
 
 // =====================
 // CARTES
