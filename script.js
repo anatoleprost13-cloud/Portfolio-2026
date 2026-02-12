@@ -15,6 +15,8 @@ document.head.appendChild(style);
 
 const cursor = document.createElement('img');
 cursor.src = 'images/mouche.png';
+cursor.classList.add('cursor-fly');
+
 cursor.style.position = 'fixed';
 cursor.style.pointerEvents = 'none';
 cursor.style.zIndex = '3000';
