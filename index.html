@@ -34,8 +34,10 @@ body {
   flex-direction:column;
   align-items:center;
   padding:50px 0;
-  overflow-x:hidden;
-  overflow-y:auto;
+
+  overflow-x: hidden; /* bloque scroll horizontal */
+  overflow-y: auto;   /* laisse défiler verticalement */
+  width: 100vw;       /* s’assure que body fait exactement la largeur de l’écran */
 }
 html, body {
   touch-action: manipulation;
@@ -246,6 +248,15 @@ document.addEventListener('mouseleave', () => {
 document.addEventListener('mouseenter', () => {
   document.documentElement.style.cursor = 'none';
 });
+
+@media (max-width: 1024px) {
+  html, body {
+    overflow-x: hidden;  /* interdit scroll horizontal */
+    overflow-y: auto;    /* autorise scroll vertical */
+    touch-action: pan-y; /* pinch/scroll vertical uniquement */
+  }
+}
+
 </script>
 
 </body>
