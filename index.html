@@ -8,6 +8,24 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 
+/* Masquer la scrollbar mais garder le scroll */
+
+/* Chrome, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* IE */
+body {
+  -ms-overflow-style: none;
+}
+
+
 body {
   background:black;
   font-family: 'HelveticaNeue', sans-serif;

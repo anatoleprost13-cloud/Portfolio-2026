@@ -355,6 +355,18 @@ function loop(){
 }
 loop();
 
+document.addEventListener('touchmove', e => {
+  const touch = e.touches[0];
+  mouseX = touch.clientX;
+  mouseY = touch.clientY;
+});
+
+document.addEventListener('touchstart', e => {
+  const touch = e.touches[0];
+  triggerPanicAt(touch.pageX, touch.pageY);
+});
+
+
 // =====================
 // EMAIL PANIC
 // =====================

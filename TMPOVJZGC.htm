@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,15 +51,31 @@ img[src*="mouche.png"] {
   }
 }
 
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   #grid {
     grid-template-columns: 1fr;
     width:95%;
-  }
+  } 
+}*/
+
+	/* Chrome, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* IE */
+body {
+  -ms-overflow-style: none;
 }
 
 .card {
-  width:100%;
+  width:auto;
+  height: auto;
   aspect-ratio:6.35/8.89;
   border-radius:12px;
   transform-style:preserve-3d;
