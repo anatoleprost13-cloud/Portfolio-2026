@@ -40,6 +40,11 @@ body {
 html, body {
   touch-action: manipulation;
 }
+body {
+  overflow-x: hidden; /* cache tout débordement horizontal */
+  width: 100vw;
+}
+
 
 img[src*="mouche.png"] {
   position: fixed !important;
@@ -78,6 +83,15 @@ img[src*="mouche.png"] {
     width:95%;
   } 
 }*/
+
+/* Bloquer scroll horizontal et vertical sur mobile/tablette */
+@media (max-width: 1024px) {
+  html, body {
+    overflow: hidden; /* plus de scroll du tout */
+    touch-action: none; /* désactive le pinch/scroll */
+  }
+}
+
 
 .card {
   width:auto;
